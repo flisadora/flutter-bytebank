@@ -1,12 +1,19 @@
-import 'package:bytebank_persistence/database/app_database.dart';
+import 'package:bytebank_persistence/database/dao/contact_dao.dart';
 import 'package:bytebank_persistence/models/contact.dart';
 import 'package:bytebank_persistence/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Contacts';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
   const ContactsList({Key? key}) : super(key: key);
+
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
+  final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,7 @@ class ContactsList extends StatelessWidget {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: findAll(),
+        future: _dao.findAll(),
         builder: (context, snapshot) {
           switch(snapshot.connectionState){
             case ConnectionState.none:
@@ -32,7 +39,6 @@ class ContactsList extends StatelessWidget {
                   ],
                 ),
               );
-              break;
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -44,7 +50,6 @@ class ContactsList extends StatelessWidget {
                 },
                 itemCount: contacts.length,
               );
-              break;
           }
           return Text('Unknown error');
         }
@@ -55,7 +60,7 @@ class ContactsList extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ContactForm(),
             ),
-          ).then((newContact) => debugPrint(newContact.toString()));
+          ).then((value) => setState(() {} ));
         },
         child: Icon(Icons.add),
       ),
