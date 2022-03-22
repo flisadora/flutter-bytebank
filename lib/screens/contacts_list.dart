@@ -22,7 +22,7 @@ class ContactsList extends StatelessWidget {
           )
         ],
       ),
-      floatingActionButton: ElevatedButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
