@@ -3,7 +3,7 @@ import 'package:bytebank_persistence/models/contact.dart';
 import 'package:bytebank_persistence/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
-const _titleAppBar = 'Contacts';
+const _titleAppBar = 'Transfer';
 
 class ContactsList extends StatefulWidget {
   const ContactsList({Key? key}) : super(key: key);
