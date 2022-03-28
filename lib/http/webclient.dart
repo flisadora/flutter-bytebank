@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:bytebank_persistence/models/contact.dart';
+import 'package:bytebank_persistence/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
@@ -19,10 +23,20 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
-void findAll() async {
+Future<List<Transaction>> findAll() async {
   Client client = InterceptedClient.build(interceptors: [
-        LoggingInterceptor(),
+    LoggingInterceptor(),
   ]);
-  final Response response =
-      await client.get(Uri.parse('http://192.168.1.80:8080/transactions'));
+  final Response response = await client
+      .get(Uri.parse('http://192.168.1.80:8080/transactions'))
+      .timeout(Duration(seconds: 5));
+  final List<dynamic> decodedJson = jsonDecode(response.body);
+  final List<Transaction> transactions = [];
+  for (Map<String, dynamic> transactionJson in decodedJson) {
+    final Map<String, dynamic> contactJason = transactionJson['contact'];
+    final Transaction transaction = Transaction(transactionJson['value'],
+        Contact(0, contactJason['name'], contactJason['accountNumber']));
+    transactions.add(transaction);
+  }
+  return transactions;
 }
