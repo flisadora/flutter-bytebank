@@ -1,10 +1,13 @@
 import 'package:bytebank_persistence/http/webclient.dart';
+import 'package:bytebank_persistence/models/contact.dart';
+import 'package:bytebank_persistence/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/dashboard.dart';
 
 void main() {
   runApp(const BytebankApp());
+  save(Transaction(350, Contact(0, 'Gui', 1089))).then((transaction) => print(transaction));
   findAll().then((transactions) => print('transactions: $transactions'));
 }
 
