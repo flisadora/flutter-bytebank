@@ -1,3 +1,4 @@
+import 'package:bytebank_persistence/components/transaction_auth_dialog.dart';
 import 'package:bytebank_persistence/models/contact.dart';
 import 'package:bytebank_persistence/models/transaction.dart';
 import 'package:flutter/material.dart';
